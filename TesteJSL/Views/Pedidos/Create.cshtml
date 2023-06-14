@@ -1,0 +1,52 @@
+﻿@model TesteJSL.Models.Pedido
+
+@{
+    ViewData["Title"] = "Novo Pedido";
+}
+
+<h4>Pedido</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClienteId" class="control-label"></label>
+                <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.Nome"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataPedido" class="control-label"></label>
+                <input asp-for="DataPedido" class="form-control" />
+                <span asp-validation-for="DataPedido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalPedido" class="control-label"></label>
+                <input asp-for="TotalPedido" class="form-control" />
+                <span asp-validation-for="TotalPedido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select id=Status asp-for="Status" class="form-control">
+                    <option>Selecione Status</option>
+                    <option>Novo</option>
+                    <option>Em rota</option>
+                    <option>Atendido</option>
+                    <option>Cancelado</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" onclick="GravarPedido();" class="btn btn-primary">Salvar</a> |
+                <a asp-action="Index">Retornar</a>
+            </div>
+    </div>
+</div>
+
+<div id="divItens" style="display:none;"
+
+></div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/pedido.js"></script>
+}
