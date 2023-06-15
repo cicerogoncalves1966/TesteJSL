@@ -14,21 +14,60 @@
     //headersadr['__RequestVerificationToken'] = tokenadr;
 
     // Bloco de gravação do pedido
-    var url = "/Pedidos/Create";
+    var url = "Save";
 
     $.ajax({
-        url: url
-        //: '@Url.Action("Create")'
-        , type: "post"
+        url: url //'@Url.Action("Save")'
+        , type: "POST"
         , datatype: "json"
-        , contentType: "application/json; charset=utf-8"
         , processData: false
-        , data: { Id: 0, ClienteId: cliente, DataPedido: data, TotalPedido: total, Status: status } //, __RequestVerificationToken: token }
-        , success: function (data) {
-            if (data.Result > 0) {
+        , pedido: {Id: 0, ClienteId: cliente, DataPedido: data, TotalPedido: total, Status: status }
+        , success: function (pedido) {
+            if (data.Resultado > 0) {
                 debugger;
-                //ListarItens(data.Result);
+                ListarItens(pedido.Result);
             }
         }
     })
 }
+
+function ListarItens(idPedido) {
+    var url = "/PedidoItens/ListarItensPedido";
+
+    $.ajax({
+        url: url
+        , type: "get"
+        , datatype: "html"
+        , data: { Id: idPedido }
+        , success: function (data) {
+            var divItens = $("#divItens");
+            divItens.empty();
+            divItens.show();
+            divItens.html(data);
+        }
+    })
+}
+
+function GravarItens(idPedido) {
+    var pedido = $("#PedidoId")
+    var quantidade = $("#Quantidade").val();
+    var produto = $("#ProdutoId").val();
+    var valorUnitario = $("#ValorProduto").val();
+    var valorTotal = $("#ValorTotal").val();
+
+    var url = "/PedidoItens/GravarItensPedido";
+
+    $.ajax({
+        url: url
+        , type: "get"
+        , datatype: "html"
+        , data: { idPedido: pedido, idProduto: produto, quantidade: quantidade, vlrUnitario: valorUnitario, vlrTotal: valorTotal }
+        , success: function (data) {
+            if (data.Resultado > 0) {
+                debugger;
+                ListarItens(idPedido);
+            }
+        }
+    })
+}
+

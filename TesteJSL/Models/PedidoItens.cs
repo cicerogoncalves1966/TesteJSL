@@ -5,7 +5,7 @@ using System.Xml.Linq;
 namespace TesteJSL.Models
 {
     [Table("PedidoProdutos")]
-    public class PedidoProdutos
+    public class PedidoItens
     {
         [Column("Id")]
         [Display(Name = "Id")]

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using TesteJSL.Models;
 
 namespace TesteJSL.Controllers
@@ -74,17 +75,14 @@ namespace TesteJSL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Pedido pedido)
+        public JsonResult Save([Bind("Id,ClienteId,DataPedido,TotalPedido,Status")] Pedido pedido)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(pedido);
                 _context.SaveChanges();
-                //return RedirectToAction(nameof(Index));
             }
-            //ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", pedido.ClienteId);
-            //return View(pedido);
-            return Json(new { Result = pedido.Id }, pedido) ;
+            return Json(new { Resultado = pedido.Id }); //, JsonRequestBahavior.AllowGet) ;
         }
 
         // GET: Pedidos/Edit/5

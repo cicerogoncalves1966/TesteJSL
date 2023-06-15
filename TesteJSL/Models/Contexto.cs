@@ -11,6 +11,6 @@ namespace TesteJSL.Models
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Pedido> Pedido { get; set; }
-        public DbSet<PedidoProdutos> PedidoProdutos { get; set; }
+        public DbSet<PedidoItens> PedidoItens { get; set; }
     }
 }
