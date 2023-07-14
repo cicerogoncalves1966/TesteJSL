@@ -17,10 +17,10 @@ namespace TesteJSL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.18")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("TesteJSL.Models.Cliente", b =>
                 {
@@ -29,21 +29,19 @@ namespace TesteJSL.Migrations
                         .HasColumnType("NUMBER(10)")
                         .HasColumnName("Id");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Ativo")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)")
                         .HasColumnName("Ativo");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)")
                         .HasColumnName("Nome");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cliente");
+                    b.ToTable("tbCliente");
                 });
 
             modelBuilder.Entity("TesteJSL.Models.Pedido", b =>
@@ -53,18 +51,20 @@ namespace TesteJSL.Migrations
                         .HasColumnType("NUMBER(10)")
                         .HasColumnName("Id");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ClienteId")
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<DateTime>("DataPedido")
                         .HasColumnType("TIMESTAMP(7)")
                         .HasColumnName("DataPedido");
 
-                    b.Property<int>("ClienteId")
+                    b.Property<int>("IdCliente")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("ClienteId");
+                        .HasColumnName("IdCliente");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)")
                         .HasColumnName("Status");
 
@@ -74,25 +74,27 @@ namespace TesteJSL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pedido");
+                    b.HasIndex("ClienteId");
+
+                    b.ToTable("tbPedido");
                 });
 
-            modelBuilder.Entity("TesteJSL.Models.PedidoProdutos", b =>
+            modelBuilder.Entity("TesteJSL.Models.PedidoItens", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)")
                         .HasColumnName("Id");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("PedidoId")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("PedidoId");
+                        .HasColumnName("IdPedido");
 
                     b.Property<int>("ProdutoId")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("ProdutoId");
+                        .HasColumnName("IdProduto");
 
                     b.Property<int>("Quantidade")
                         .HasColumnType("NUMBER(10)")
@@ -108,7 +110,9 @@ namespace TesteJSL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PedidoProdutos");
+                    b.HasIndex("ProdutoId");
+
+                    b.ToTable("tbPedidoProdutos");
                 });
 
             modelBuilder.Entity("TesteJSL.Models.Produto", b =>
@@ -118,15 +122,13 @@ namespace TesteJSL.Migrations
                         .HasColumnType("NUMBER(10)")
                         .HasColumnName("Id");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Ativo")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)")
                         .HasColumnName("Ativo");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)")
                         .HasColumnName("Nome");
 
@@ -136,7 +138,27 @@ namespace TesteJSL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Produto");
+                    b.ToTable("tbProduto");
+                });
+
+            modelBuilder.Entity("TesteJSL.Models.Pedido", b =>
+                {
+                    b.HasOne("TesteJSL.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId");
+
+                    b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("TesteJSL.Models.PedidoItens", b =>
+                {
+                    b.HasOne("TesteJSL.Models.Produto", "Produto")
+                        .WithMany()
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Produto");
                 });
 #pragma warning restore 612, 618
         }

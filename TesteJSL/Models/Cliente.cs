@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TesteJSL.Models
 {
-    [Table("Cliente")]
+    [Table("tbCliente")]
     public class Cliente
     {
         [Column("Id")]
@@ -12,10 +12,10 @@ namespace TesteJSL.Models
  
         [Column("Nome")]
         [Display(Name = "Nome")]
-        public string Nome { get; set; }
+        public string? Nome { get; set; }
 
         [Column("Ativo")]
         [Display(Name = "Status")]
-        public string Ativo { get; set; }
+        public string? Ativo { get; set; }
     }
 }

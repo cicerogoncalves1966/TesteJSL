@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace TesteJSL.Models
 {
-    [Table("Pedido")]
+    [Table("tbPedido")]
     public class Pedido
     {
         [Column("Id")]
@@ -13,9 +13,9 @@ namespace TesteJSL.Models
 
         [Column("IdCliente")]
         [Display(Name = "Cliente")]
-        public int ClienteId { get; set; }
+        public int IdCliente { get; set; }
 
-        public Cliente Cliente { get; set; }
+        public Cliente? Cliente { get; set; }
 
         [Column("DataPedido")]
         [Display(Name = "Data Pedido")]
@@ -27,6 +27,6 @@ namespace TesteJSL.Models
 
         [Column("Status")]
         [Display(Name = "Status")]
-        public string Status { get; set; }
+        public string? Status { get; set; }
     }
 }

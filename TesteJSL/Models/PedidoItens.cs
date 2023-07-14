@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace TesteJSL.Models
 {
-    [Table("PedidoProdutos")]
+    [Table("tbPedidoProdutos")]
     public class PedidoItens
     {
         [Column("Id")]
@@ -19,7 +19,7 @@ namespace TesteJSL.Models
         [Display(Name = "Produto")]
         public int ProdutoId { get; set; }
 
-        public Produto Produto { get; set; }
+        public Produto? Produto { get; set; }
 
         [Column("Quantidade")]
         [Display(Name = "Qtde")]

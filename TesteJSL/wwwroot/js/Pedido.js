@@ -2,26 +2,27 @@
     debugger;
 
     var data = $("#DataPedido").val();
-    var cliente = $("#ClienteId").val();
+    var cliente = $("#IdCliente").val();
     var total = $("#TotalPedido").val();
     var status = $("#Status").val();
 
-    //var token = $('input[name="__RequestVerificationToken"]', $('#__AjaxAntiForgeryForm')).val();
-    //var tokenadr = $('form[action="~/Pedidos/Create"] input[name="__RequestVerificationToken"]').val();
+    //var token = $('input[name="__RequestVerificationToken"]').val();
+    //var tokenadr = $('form[action="/Pedidos/Create"] input[name="__RequestVerificationToken"]').val();
     //var headers = {};
     //var headersadr = {};
     //headers['__RequestVerificationToken'] = token;
     //headersadr['__RequestVerificationToken'] = tokenadr;
+    var headers = { __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() };
 
     // Bloco de gravação do pedido
-    var url = "Save";
+    var url = "/Pedidos/Create";
 
     $.ajax({
-        url: url //'@Url.Action("Save")'
+        url: url
         , type: "POST"
         , datatype: "json"
-        , processData: false
-        , pedido: {Id: 0, ClienteId: cliente, DataPedido: data, TotalPedido: total, Status: status }
+        , headers: headers
+        , pedido: { Id: 0, IdCliente: cliente, DataPedido: data, TotalPedido: total, Status: status }
         , success: function (pedido) {
             if (data.Resultado > 0) {
                 debugger;

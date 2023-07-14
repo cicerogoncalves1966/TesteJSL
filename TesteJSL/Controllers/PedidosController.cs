@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using TesteJSL.Models;
 
 namespace TesteJSL.Controllers
@@ -48,7 +43,7 @@ namespace TesteJSL.Controllers
         // GET: Pedidos/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id");
+            ViewData["IdCliente"] = new SelectList(_context.Clientes, "Id", "Id");
             ViewData["Nome"] = new SelectList(_context.Clientes, "Id", "Nome");
             return View();
         }
@@ -58,7 +53,7 @@ namespace TesteJSL.Controllers
         //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,ClienteId,DataPedido,TotalPedido,Status")] Pedido pedido)
+        //public async Task<IActionResult> Create([Bind("Id,IdCliente,DataPedido,TotalPedido,Status")] Pedido pedido)
         //{
         //    if (ModelState.IsValid)
         //    {
@@ -66,7 +61,7 @@ namespace TesteJSL.Controllers
         //        await _context.SaveChangesAsync();
         //        return RedirectToAction(nameof(Index));
         //    }
-        //    ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", pedido.ClienteId);
+        //    ViewData["IdCliente"] = new SelectList(_context.Clientes, "Id", "Id", pedido.IdCliente);
         //    return View(pedido);
         //}
 
@@ -75,7 +70,7 @@ namespace TesteJSL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Save([Bind("Id,ClienteId,DataPedido,TotalPedido,Status")] Pedido pedido)
+        public JsonResult Create(Pedido pedido)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +93,7 @@ namespace TesteJSL.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", pedido.ClienteId);
+            ViewData["IdCliente"] = new SelectList(_context.Clientes, "Id", "Id", pedido.IdCliente);
             return View(pedido);
         }
 
@@ -107,7 +102,7 @@ namespace TesteJSL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ClienteId,DataPedido,TotalPedido,Status")] Pedido pedido)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,IdCliente,DataPedido,TotalPedido,Status")] Pedido pedido)
         {
             if (id != pedido.Id)
             {
@@ -134,7 +129,7 @@ namespace TesteJSL.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", pedido.ClienteId);
+            ViewData["IdCliente"] = new SelectList(_context.Clientes, "Id", "Id", pedido.IdCliente);
             return View(pedido);
         }
 
